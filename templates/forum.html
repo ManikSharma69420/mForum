@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>forum</title>
+</head>
+<center>
+<font face="Consolas" color="white">
+<h1>forum</h1>
+</center>
+<body bgcolor="rgb(50,50,50)">
+    <h1>Welcome, {{ username }}</h1>
+    <h2>Create a New Topic</h2>
+    <form action="/new-topic" method="post">
+        <input type="text" name="title" placeholder="Topic Title" required>
+        <button type="submit">Create Topic</button>
+    </form>
+    <h2>Topics</h2>
+    <ul>
+        {% for topic in topics %}
+            <li>
+                <h3>{{ topic.title }} by {{ topic.username }}</h3>
+                <ul>
+                    {% for message in topic.messages %}
+                        <li><strong>{{ message.username }}:</strong> {{ message.message }}</li>
+                    {% endfor %}
+                </ul>
+                <form action="/new-message" method="post">
+                    <input type="hidden" name="topic_index" value="{{ loop.index0 }}">
+                    <input type="text" name="message" placeholder="Your Message" required>
+                    <button type="submit">Post Message</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</font>
+</body>
+</html>
