@@ -1,5 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_session import Session
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+app = Flask(__name__)
+
+# Set up rate limiting
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["250 per day", "65 per hour"]  # Adjust as needed
+)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'session-token'
